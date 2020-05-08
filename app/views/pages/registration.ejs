@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shop</title>
+  </head>
+
+  <body>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <h1 style="text-align: center;">My shop</h1>
+    <form method="POST" action="api/loginUser" target="/">
+      <input
+        id="f_name"
+        name="first_name"
+        type="text"
+        placeholder="first name"
+      />
+      <br />
+      <input id="l_name" name="last_name" type="text" placeholder="last name" />
+      <br />
+      <input id="email" name="email" type="text" placeholder="Email" /><br />
+      <input
+        id="password"
+        name="password"
+        type="password"
+        placeholder="Password"
+      /><br />
+    </form>
+    <button onclick="regist()">LogIn</button>
+    <script>
+      async function regist() {
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+        var first_name = document.getElementById("f_name").value;
+        var last_name = document.getElementById("l_name").value;
+        var data = await axios.post(
+          "api/createUser",
+          (query = { email, password, first_name, last_name })
+        );
+        if (data.status == 201) {
+          localStorage.setItem("logined", true);
+          location.href = "api/product";
+        }
+      }
+    </script>
+  </body>
+</html>

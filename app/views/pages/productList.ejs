@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shop</title>
+  </head>
+  <body>
+    <div style="display: flex;">
+      <h1 style="margin: 5%;"><a href="">Shop Bag</a></h1>
+      <h1 style="margin: 5%;"><a href="">Add product</a></h1>
+    </div>
+
+    <% for (var i = 0 ; i< data.length;i++) { %>
+    <div
+      style="
+        display: flex;
+        margin: 2%;
+        padding: 4%;
+        background-color: grey;
+        border-radius: 20px;
+      "
+    >
+      <div>
+        <h1><%=data[i].title %></h1>
+        <h3><%=data[i].discription %></h3>
+        <h2><%=data[i].cost %> $</h2>
+      </div>
+      <button style="margin-left: 40%;">Got It</button>
+    </div>
+
+    <% } %>
+  </body>
+</html>
