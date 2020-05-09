@@ -21,6 +21,12 @@ app.use("/api", productRoute);
 app.get("/registr", (req, res) => {
   res.render("registration");
 });
+app.get("/addProduct", (req, res) => {
+  res.render("addProduct");
+});
+app.get("/search", (req, res) => {
+  res.render("search");
+});
 app.get("/", (req, res) => {
   res.render("index");
 });

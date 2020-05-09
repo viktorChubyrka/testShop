@@ -1,10 +1,36 @@
+var express = require("express");
+var app = express();
 var moment = require("moment");
-var isEmpty = require("../helpers/validations");
+var { isEmpty } = require("../helpers/validations");
 var dbQuery = require("../db/dev/dbQuery");
+
+app.set("view engine", "ejs");
+app.set("views", __dirname + "/app/views/pages");
 
 var { errorMessage, successMessage, status } = require("../helpers/status");
 
 const addProductDetails = async (req, res) => {
+  if (req.body.searchString) {
+    const getAllProductQuery = "SELECT * FROM product ORDER BY id DESC";
+    var searchStr = req.body.searchString;
+    try {
+      const { rows } = await dbQuery.query(getAllProductQuery);
+      var dbResponse = rows;
+      if (dbResponse[0] === undefined) {
+        errorMessage.error = "There are no products";
+        return res.status(status.notfound).send(errorMessage);
+      }
+      var filteredData = dbResponse.filter((e) => {
+        return e.title.toLowerCase().match(searchStr);
+      });
+      successMessage.data = filteredData;
+      return res.render("productList", { data: successMessage.data });
+    } catch (error) {
+      errorMessage.error = "An error Occured";
+      return res.status(status.error).send(errorMessage);
+    }
+  }
+
   const { title, discription, cost } = req.body;
 
   const created_on = moment(new Date());
@@ -32,6 +58,7 @@ const addProductDetails = async (req, res) => {
 
 const getAllProducts = async (req, res) => {
   const getAllProductQuery = "SELECT * FROM product ORDER BY id DESC";
+
   try {
     const { rows } = await dbQuery.query(getAllProductQuery);
     const dbResponse = rows;

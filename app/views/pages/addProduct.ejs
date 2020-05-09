@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shop</title>
+  </head>
+
+  <body>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <h1 style="text-align: center;">AddProduct</h1>
+    <form method="POST" action="api/loginUser" target="/">
+      <input id="title" name="title" type="text" placeholder="title" />
+      <br />
+      <input
+        id="discription"
+        name="discription"
+        type="text"
+        placeholder="discription"
+      />
+      <br />
+      <input id="cost" name="cost" type="text" placeholder="cost" /><br />
+    </form>
+    <button onclick="regist()">Add</button>
+    <script>
+      async function regist() {
+        var title = document.getElementById("title").value;
+        var discription = document.getElementById("discription").value;
+        var cost = document.getElementById("cost").value;
+        var data = await axios.post(
+          "api/product",
+          (query = { title, discription, cost })
+        );
+        if (data.status == 201) {
+          location.href = "api/product";
+        }
+      }
+    </script>
+  </body>
+</html>
